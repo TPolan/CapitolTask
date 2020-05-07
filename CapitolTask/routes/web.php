@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/employees', 'all@EmployeeController');
-Route::get('/employees/{withJobId}', 'allWith@EmployeeController');
-Route::get('/employees/{withoutJobId}', 'allWithout@EmployeeController');
+Route::get('/employees/list', 'EmployeeController@all');
+
 
