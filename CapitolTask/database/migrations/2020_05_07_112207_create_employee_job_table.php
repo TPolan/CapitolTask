@@ -14,8 +14,8 @@ class CreateEmployeeJobTable extends Migration
     public function up()
     {
         Schema::create('employee_job', function (Blueprint $table) {
-            $table->integer('employee_id');
-            $table->integer('job_id');
+            $table->unsignedInteger('employee_id');
+            $table->unsignedInteger('job_id');
             $table->timestamps();
             $table->softDeletes();
         });

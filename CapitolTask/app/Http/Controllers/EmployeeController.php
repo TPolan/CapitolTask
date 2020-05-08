@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Job;
 use App\Employee;
+use App\Job;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -11,18 +11,19 @@ class EmployeeController extends Controller
 {
     public function all(Request $request): JsonResponse
     {
-        if ($request->with) {
-            dd('with');
+        if (!empty($request->with)) {
             /** @var Job $jobs */
-            $jobs = Job::query()->where('job_code', $request->with)->get();
+            $jobs = Job::query()->where('job_code', $request->with)->firstOrFail();
             return response()->json($jobs->employees()->get());
         }
 
-        if ($request->without) {
-            dd('without');
+        if (!empty($request->without)) {
             /** @var Job $jobs */
-            $jobs = Job::query()->where('job_code', $request->without)->get();
-            return response()->json($jobs->employees()->get());
+            $jobs             = Job::query()->where('job_code', $request->without)->firstOrFail();
+            $employeesWithJob = $jobs->employees()->get();
+            $allEmployees     = Employee::all();
+
+            return response()->json($allEmployees->diff($employeesWithJob));
         }
 
         return response()->json(Employee::all());

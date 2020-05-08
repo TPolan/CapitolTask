@@ -21,6 +21,6 @@ class Job extends Model
 
     public function employees()
     {
-        return $this->belongsToMany('App\Employee');
+        return $this->belongsToMany(Employee::class);
     }
 }
